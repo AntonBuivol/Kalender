@@ -6,7 +6,6 @@ namespace EventManagerMvc.Models
 {
     public class Event
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
