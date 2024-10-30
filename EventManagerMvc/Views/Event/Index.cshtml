@@ -4,8 +4,11 @@
     ViewBag.Title = "Events Calendar";
 }
 <p>
-    @Html.ActionLink("Lisa uus Event", "Create")
-</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Lisa uus Event", "Create")
+    }
+    </p>
 <table class="table">
     <tr>
         <th>

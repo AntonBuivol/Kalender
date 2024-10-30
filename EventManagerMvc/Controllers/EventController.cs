@@ -3,15 +3,15 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace EventManagerMvc.Controllers
 {
     public class EventController : Controller
     {
-        private EventContext db = new EventContext();
+        ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Event
         public ActionResult Index()
         {
             return View(db.Events.ToList());
@@ -40,93 +40,90 @@ namespace EventManagerMvc.Controllers
             }
         }
 
-        // GET: Event/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event eventt = db.Events.Find(id);
+            if (eventt == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(eventt);
         }
 
-        // GET: Event/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Event/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Date,Description")] Event @event)
+        public ActionResult Create([Bind(Include = "Id,Name,Date,Description")] Event eventt)
         {
             if (ModelState.IsValid)
             {
-                db.Events.Add(@event);
+                var user = db.Users.Find(eventt.UserId);
+                eventt.User = user;
+                E_mail(eventt);
+                db.Events.Add(eventt);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(@event);
+            return View(eventt);
         }
 
-        // GET: Event/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event eventt = db.Events.Find(id);
+            if (eventt == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(eventt);
         }
 
-        // POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Date,Description")] Event @event)
+        public ActionResult Edit([Bind(Include = "Id,Name,Date,Description")] Event eventt)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(@event).State = EntityState.Modified;
+                db.Entry(eventt).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+            return View(eventt);
         }
 
-        // GET: Event/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event eventt = db.Events.Find(id);
+            if (eventt == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(eventt);
         }
 
-        // POST: Event/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = db.Events.Find(id);
-            db.Events.Remove(@event);
+            Event eventt = db.Events.Find(id);
+            db.Events.Remove(eventt);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -138,6 +135,26 @@ namespace EventManagerMvc.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public void E_mail(Event eventt)
+        {
+            var user = db.Users.Find(eventt.UserId);
+            eventt.User = user;
+            try
+            {
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "nepridumalnazvaniepocht@gmail.com";
+                WebMail.Password = "rnlt mfvn ftjb usxu";
+                WebMail.From = "nepridumalnazvaniepocht@gmail.com";
+                WebMail.Send(user.Email, "Uus event!", eventt.Name + " " + eventt.Date + " " + eventt.Description);
+                ViewBag.Message = "Kiri on saatnud!";
+            }
+            catch
+            {
+                ViewBag.Message = "Mul on kahju! Ei saa kirja saada!!!";
+            }
         }
     }
 }
