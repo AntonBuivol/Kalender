@@ -22,15 +22,13 @@ namespace EventManagerMvc.Controllers
         {
             try
             {
-                // Сначала выполните запрос и загрузите все события из базы данных
                 var eventsFromDb = db.Events.ToList();
 
-                // Затем преобразуйте данные в нужный формат
                 var events = eventsFromDb.Select(e => new
                 {
                     id = e.Id,
                     title = e.Name,
-                    start = e.Date.ToString("yyyy-MM-ddTHH:mm:ss"), // Форматируем дату после выборки из БД
+                    start = e.Date.ToString("yyyy-MM-ddTHH:mm:ss"),
                     description = e.Description
                 }).ToList();
 
@@ -41,10 +39,6 @@ namespace EventManagerMvc.Controllers
                 return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
-
-
-
 
         // GET: Event/Details/5
         public ActionResult Details(int? id)
