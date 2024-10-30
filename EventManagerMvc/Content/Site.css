@@ -1,31 +1,88 @@
 ﻿/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444;
+    background-color: #f4f7fa;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
 }
 
-h2 {
-    color: #007bff;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-hr {
-    border: 0;
-    border-top: 1px solid #ddd;
+/* Navbar Styles */
+.navbar {
+    background-color: #495057;
+    border-bottom: 2px solid #343a40;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .navbar-brand, .navbar .nav-link {
+    color: #f1f1f1 !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover, .navbar .navbar-brand:hover {
+    color: #c9d1d9 !important;
+}
+
+/* Buttons */
+.btn-default {
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-default:hover {
+    background-color: #0a58ca;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f8f9fc;
+}
+
+.table tr:hover {
+    background-color: #eaf3fc;
 }
 
 /* Form Styles */
-.form-horizontal {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
+.form-horizontal .form-group {
+    margin-bottom: 20px;
 }
 
 .control-label {
@@ -35,84 +92,60 @@ hr {
 
 .form-control {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    color: #333;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        outline: none;
-    }
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 4px rgba(13, 110, 253, 0.25);
+    outline: none;
+}
 
 .text-danger {
-    color: #d9534f;
-    font-size: 12px;
+    color: #e74c3c;
+    font-weight: 500;
 }
 
-/* Button Styles */
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    background-color: #495057;
+    color: #f8f9fa;
+    border-top: 2px solid #343a40;
+    font-size: 0.9rem;
 }
 
-.btn-default {
-    background-color: #007bff;
-    color: #fff;
+footer p {
+    margin: 0;
+    color: #adb5bd;
 }
 
-    .btn-default:hover {
-        background-color: #0056b3;
-    }
-
-.form-actions {
-    margin-top: 20px;
-}
-
-    .form-actions .btn {
-        margin-right: 10px;
-    }
-
-/* Table Styles */
-.table {
-    width: 100%;
-    border-collapse: collapse;
+/* Additional Enhancements */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #e9ecef;
     margin: 20px 0;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-    .table th,
-    .table td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        color: #333;
-    }
-
-    .table tr:hover {
-        background-color: #f9f9f9;
-    }
-
-/* Links */
-a {
-    color: #007bff;
-    text-decoration: none;
+.dl-horizontal dt {
+    font-weight: bold;
+    color: #495057;
 }
 
-    a:hover {
-        color: #0056b3;
-        text-decoration: underline;
-    }
+.dl-horizontal dd {
+    margin-left: 0;
+    padding-bottom: 10px;
+}
+
+input[type="submit"], input[type="button"] {
+    cursor: pointer;
+}
+
