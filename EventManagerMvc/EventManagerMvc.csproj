@@ -211,6 +211,9 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\KalendarBuivolMiskevych - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\KalendarBuivolMiskevych - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\KalendarBuivolMiskevych - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\fullcalendar\fullcalendar.js" />
     <Content Include="Scripts\fullcalendar\fullcalendar.min.js" />
