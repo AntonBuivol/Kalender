@@ -40,6 +40,15 @@
     </div>
 
     <div class="form-group">
+        @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <p class="form-control-static">@User.Identity.Name</p>
+        </div>
+        @Html.HiddenFor(model => model.UserId)
+    </div>
+
+
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
         </div>

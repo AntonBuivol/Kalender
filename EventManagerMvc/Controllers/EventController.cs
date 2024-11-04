@@ -1,4 +1,5 @@
 ﻿using EventManagerMvc.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -46,12 +47,12 @@ namespace EventManagerMvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event events = db.Events.Find(id);
+            if (events == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(events);
         }
 
         [Authorize]
@@ -63,19 +64,21 @@ namespace EventManagerMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Date,Description")] Event @event)
+        public ActionResult Create(Event events)
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.Find(@event.UserId);
-                @event.User = user;
-                E_mail(@event);
-                db.Events.Add(@event);
+                var userId = User.Identity.GetUserId();
+                var user = db.Users.Find(userId);
+                events.UserId = userId;
+                events.User = user;
+                E_mail(events);
+                db.Events.Add(events);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(@event);
+            return View(events);
         }
 
         public ActionResult Edit(int? id)
@@ -84,25 +87,25 @@ namespace EventManagerMvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event events = db.Events.Find(id);
+            if (events == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(events);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Date,Description")] Event @event)
+        public ActionResult Edit([Bind(Include = "Id,Name,Date,Description")] Event events)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(@event).State = EntityState.Modified;
+                db.Entry(events).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+            return View(events);
         }
 
         public ActionResult Delete(int? id)
@@ -111,20 +114,20 @@ namespace EventManagerMvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            Event events = db.Events.Find(id);
+            if (events == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(events);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = db.Events.Find(id);
-            db.Events.Remove(@event);
+            Event events = db.Events.Find(id);
+            db.Events.Remove(events);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -137,10 +140,10 @@ namespace EventManagerMvc.Controllers
             }
             base.Dispose(disposing);
         }
-        public void E_mail(Event @event)
+        public void E_mail(Event events)
         {
-            var user = db.Users.Find(@event.UserId);
-            @event.User = user;
+            var user = db.Users.Find(events.UserId);
+            events.User = user;
             try
             {
                 WebMail.SmtpServer = "smtp.gmail.com";
@@ -149,7 +152,7 @@ namespace EventManagerMvc.Controllers
                 WebMail.UserName = "nepridumalnazvaniepocht@gmail.com";
                 WebMail.Password = "rnlt mfvn ftjb usxu";
                 WebMail.From = "nepridumalnazvaniepocht@gmail.com";
-                WebMail.Send(user.Email, "Uus event!", @event.Name + " " + @event.Date + " " + @event.Description);
+                WebMail.Send(user.Email, "Uus event!", events.Name + " " + events.Date + " " + events.Description);
                 ViewBag.Message = "Kiri on saatnud!";
             }
             catch

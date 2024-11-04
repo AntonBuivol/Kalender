@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,8 @@ namespace EventManagerMvc.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public virtual ICollection<Event> Events { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -33,7 +36,7 @@ namespace EventManagerMvc.Models
         public DbSet<Event> Events { get; set; }
     }
 
-    public class ApplicationDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
+    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
